@@ -30,7 +30,7 @@ class _TodoListPageState extends State<TodoListPage> {
       //Body com padding
       body: Container(
         color: Colors.blue[100],
-        padding: EdgeInsets.all(16fdsfs),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -62,33 +62,36 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
 
       //Botão de adicionar
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            backgroundColor: Colors.blue,
-            onPressed: () {
-              setState(() {
-                lista = [];
-              });
-              _textEditingController.clear();
-            },
-            child: Icon(Icons.bookmark_remove),
-          ),
-          FloatingActionButton(
-            backgroundColor: Colors.blue,
-            onPressed: () {
-              if (_textEditingController.text.isNotEmpty) {
+      floatingActionButton: SizedBox(
+        width: 360,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              backgroundColor: Colors.blue,
+              onPressed: () {
                 setState(() {
-                  lista.add(_textEditingController.text);
+                  lista = [];
                 });
                 _textEditingController.clear();
-              }
-            },
-            child: Icon(Icons.bookmark_add),
-          ),
-        ],
+              },
+              child: Icon(Icons.remove_circle),
+            ),
+            FloatingActionButton(
+              backgroundColor: Colors.blue,
+              onPressed: () {
+                if (_textEditingController.text.isNotEmpty) {
+                  setState(() {
+                    lista.add(_textEditingController.text);
+                  });
+                  _textEditingController.clear();
+                }
+              },
+              child: Icon(Icons.add_circle),
+            ),
+          ],
+        ),
       ),
     );
   }
