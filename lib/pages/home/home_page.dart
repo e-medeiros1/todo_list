@@ -1,46 +1,42 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
-class TodoListPage extends StatefulWidget {
-  const TodoListPage({Key? key}) : super(key: key);
+import 'widgets/floating_button.dart';
+import 'widgets/input.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _TodoListPageState createState() => _TodoListPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _TodoListPageState extends State<TodoListPage> {
+class _HomePageState extends State<HomePage> {
   final TextEditingController _textEditingController = TextEditingController();
   List<String> lista = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Barra
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Center(
+        title: const Center(
           child: Text(
             'Lista De Afazeres',
             style: TextStyle(color: Colors.white),
           ),
         ),
       ),
-
-      //Body com padding
       body: Container(
         color: Colors.blue[100],
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: _textEditingController,
-            ),
+            Input(textEditingController: _textEditingController),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               height: 310,
               child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(),
+                separatorBuilder: (context, index) => const Divider(),
                 itemCount: lista.length,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -51,7 +47,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     },
                     title: Text(
                       lista[index],
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   );
                 },
@@ -60,36 +56,31 @@ class _TodoListPageState extends State<TodoListPage> {
           ],
         ),
       ),
-
-      //Botão de adicionar
       floatingActionButton: SizedBox(
         width: 360,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              backgroundColor: Colors.blue,
+            FloatingButton(
               onPressed: () {
                 setState(() {
-                  lista = [];
+                  lista.removeLast();
                 });
                 _textEditingController.clear();
               },
-              child: Icon(Icons.remove_circle),
+              icon: const Icon(Icons.remove_circle_outline_outlined),
             ),
-            FloatingActionButton(
-              backgroundColor: Colors.blue,
-              onPressed: () {
-                if (_textEditingController.text.isNotEmpty) {
-                  setState(() {
-                    lista.add(_textEditingController.text);
-                  });
-                  _textEditingController.clear();
-                }
-              },
-              child: Icon(Icons.add_circle),
-            ),
+            FloatingButton(
+                onPressed: () {
+                  if (_textEditingController.text.isNotEmpty) {
+                    setState(() {
+                      lista.add(_textEditingController.text);
+                    });
+                    _textEditingController.clear();
+                  }
+                },
+                icon: const Icon(Icons.add_circle_outline))
           ],
         ),
       ),
