@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'pages/home/widgets/floating_button.dart';
+import 'pages/home/widgets/input.dart';
+
 class TodoListPage extends StatefulWidget {
   const TodoListPage({Key? key}) : super(key: key);
 
@@ -16,7 +19,6 @@ class _TodoListPageState extends State<TodoListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Barra
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Center(
@@ -26,16 +28,12 @@ class _TodoListPageState extends State<TodoListPage> {
           ),
         ),
       ),
-
-      //Body com padding
       body: Container(
         color: Colors.blue[100],
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: _textEditingController,
-            ),
+            Input(textEditingController: _textEditingController),
             Container(
               padding: EdgeInsets.all(10),
               height: 310,
@@ -60,36 +58,31 @@ class _TodoListPageState extends State<TodoListPage> {
           ],
         ),
       ),
-
-      //Botão de adicionar
       floatingActionButton: SizedBox(
         width: 360,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              backgroundColor: Colors.blue,
+            FloatingButton(
               onPressed: () {
                 setState(() {
-                  lista = [];
+                  lista.removeLast();
                 });
                 _textEditingController.clear();
               },
-              child: Icon(Icons.remove_circle),
+              icon: Icon(Icons.remove_circle_outline_outlined),
             ),
-            FloatingActionButton(
-              backgroundColor: Colors.blue,
-              onPressed: () {
-                if (_textEditingController.text.isNotEmpty) {
-                  setState(() {
-                    lista.add(_textEditingController.text);
-                  });
-                  _textEditingController.clear();
-                }
-              },
-              child: Icon(Icons.add_circle),
-            ),
+            FloatingButton(
+                onPressed: () {
+                  if (_textEditingController.text.isNotEmpty) {
+                    setState(() {
+                      lista.add(_textEditingController.text);
+                    });
+                    _textEditingController.clear();
+                  }
+                },
+                icon: Icon(Icons.add_circle_outline))
           ],
         ),
       ),
