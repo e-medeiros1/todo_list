@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/pages/home/home_page.dart';
+
+import 'pages/home/home_page.dart';
+
 
 main() {
   runApp(const MyApp());

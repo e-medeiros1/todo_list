@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'widgets/floating_button.dart';
 import 'widgets/input.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -69,7 +71,10 @@ class _HomePageState extends State<HomePage> {
                 });
                 _textEditingController.clear();
               },
+
               icon: const Icon(Icons.remove_circle_outline_outlined),
+
+
             ),
             FloatingButton(
                 onPressed: () {
@@ -80,7 +85,9 @@ class _HomePageState extends State<HomePage> {
                     _textEditingController.clear();
                   }
                 },
+
                 icon: const Icon(Icons.add_circle_outline))
+
           ],
         ),
       ),
