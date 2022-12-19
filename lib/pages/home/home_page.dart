@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:to_do_list/pages/home/controller/todo_controller.dart';
+import 'package:to_do_list/pages/home/widgets/dismisseble_item.dart';
 
-import 'widgets/floating_button.dart';
+import 'widgets/custom_icon_button.dart';
 import 'widgets/input.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _textEditingController = TextEditingController();
-  List<String> lista = [];
+  final TextEditingController controller = TextEditingController();
+  final instance = Get.put(TodoController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,74 +25,38 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blue,
         title: const Center(
           child: Text(
-            'Lista De Afazeres',
+            'Lista de afazeres',
             style: TextStyle(color: Colors.white),
           ),
         ),
       ),
       body: Container(
-        color: Colors.blue[100],
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Input(textEditingController: _textEditingController),
-            Container(
-              padding: const EdgeInsets.all(10),
-              height: 310,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: lista.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onLongPress: () {
-                      setState(() {
-                        lista.removeAt(index);
-                      });
-                    },
-                    title: Text(
-                      lista[index],
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  );
-                },
+        child: GetX<TodoController>(
+          init: TodoController(),
+          builder: (instance) => Column(
+            children: [
+              Input(controller: controller),
+              Container(
+                padding: const EdgeInsets.all(10),
+                height: 310,
+                child: ListView.builder(
+                  itemCount: instance.list.length,
+                  itemBuilder: (context, index) {
+                    return DismissebleItem(
+                      title: instance.list[index],
+                      onDismissed: (_) => instance.removeNotes(index),
+                      key: ValueKey(instance.list[index]),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 360,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            FloatingButton(
-              onPressed: () {
-                setState(() {
-                  lista.removeLast();
-                });
-                _textEditingController.clear();
-              },
-
-              icon: const Icon(Icons.remove_circle_outline_outlined),
-
-
-            ),
-            FloatingButton(
-                onPressed: () {
-                  if (_textEditingController.text.isNotEmpty) {
-                    setState(() {
-                      lista.add(_textEditingController.text);
-                    });
-                    _textEditingController.clear();
-                  }
-                },
-
-                icon: const Icon(Icons.add_circle_outline))
-
-          ],
-        ),
-      ),
+      floatingActionButton:
+          CustomIconButton(onPressed: () => instance.addNotes(controller)),
     );
   }
 }

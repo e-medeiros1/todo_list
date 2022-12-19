@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {
-  const Input({
-    Key? key,
-    required TextEditingController textEditingController,
-  }) : _textEditingController = textEditingController, super(key: key);
-
-  final TextEditingController _textEditingController;
+  TextEditingController controller = TextEditingController();
+  Input({
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _textEditingController,
+      decoration: InputDecoration(
+        hintText: 'O que devo fazer?',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      controller: controller,
     );
   }
 }
