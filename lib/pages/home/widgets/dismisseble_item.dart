@@ -50,7 +50,7 @@ class _DismissebleItemState extends State<DismissebleItem> {
       child: Card(
         elevation: 3,
         shadowColor: Colors.blue,
-        margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: ListTile(
           title: Text(
             widget.title,
